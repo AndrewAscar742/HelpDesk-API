@@ -1,4 +1,4 @@
-package br.com.senai.sollaris.domain.enums;
+package br.com.sp.helpDesk.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

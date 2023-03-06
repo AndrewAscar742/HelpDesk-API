@@ -1,22 +1,44 @@
-package br.com.senai.sollaris.domain.model;
+package br.com.sp.helpDesk.domain;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.com.senai.sollaris.domain.enums.Perfil;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public abstract class Pessoa {
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.sp.helpDesk.domain.enums.Perfil;
+
+@Entity
+public abstract class Pessoa implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	protected String nome;
+	
+	@Column(unique = true)
 	protected String cpf;
+	
+	@Column(unique = true)
 	protected String email;
 	protected String senha;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
 	protected Set<Integer> perfis = new HashSet<>();
-	protected LocalDateTime dataCriacao = LocalDateTime.now();
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	protected LocalDate dataCriacao;
 	
 	public Pessoa() {
 		super();
@@ -82,11 +104,11 @@ public abstract class Pessoa {
 		this.perfis.add(perfil.getId());
 	}
 	
-	public LocalDateTime getDataCriacao() {
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 	
-	public void setDataCriacao(LocalDateTime dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 	

@@ -1,4 +1,4 @@
-package br.com.senai.sollaris;
+package br.com.sp.helpDesk;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,19 +1,28 @@
-package br.com.senai.sollaris.domain.model;
+package br.com.sp.helpDesk.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import br.com.sp.helpDesk.domain.enums.Perfil;
+
+@Entity
 public class Tecnico extends Pessoa {
+	private static final long serialVersionUID = 1L;
+	
+	@OneToMany(mappedBy = "tecnico")
 	private List<Chamado> chamados = new ArrayList<>();
 	
 	public Tecnico() {
-		// TODO Auto-generated constructor stub
+		addPerfil(Perfil.CLIENTE);
 	}
 	
 
 	public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
 		super(id, nome, cpf, email, senha);
-		// TODO Auto-generated constructor stub
+		addPerfil(Perfil.CLIENTE);
 	}
 
 

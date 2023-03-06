@@ -1,23 +1,46 @@
-package br.com.senai.sollaris.domain.model;
+package br.com.sp.helpDesk.domain;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
-import br.com.senai.sollaris.domain.enums.Prioridade;
-import br.com.senai.sollaris.domain.enums.Status;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-public class Chamado {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.sp.helpDesk.domain.enums.Prioridade;
+import br.com.sp.helpDesk.domain.enums.Status;
+
+@Entity
+public class Chamado implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private LocalDateTime dataAbertura = LocalDateTime.now();
-	private LocalDateTime dataFechamento;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataAbertura = LocalDate.now();
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	private LocalDate dataFechamento;
+	
 	private Prioridade prioridade;
 	private Status status;
 	private String titulo;
 	private String observacao;
 	
+	@ManyToOne
+	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	private Cliente cliente;
 	
+	@ManyToOne
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+
 	public Chamado() {
 		// TODO Auto-generated constructor stub
 	}
@@ -42,19 +65,19 @@ public class Chamado {
 		this.id = id;
 	}
 
-	public LocalDateTime getDataAbertura() {
+	public LocalDate getDataAbertura() {
 		return dataAbertura;
 	}
 
-	public void setDataAbertura(LocalDateTime dataAbertura) {
+	public void setDataAbertura(LocalDate dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 
-	public LocalDateTime getDataFechamento() {
+	public LocalDate getDataFechamento() {
 		return dataFechamento;
 	}
 
-	public void setDataFechamento(LocalDateTime dataFechamento) {
+	public void setDataFechamento(LocalDate dataFechamento) {
 		this.dataFechamento = dataFechamento;
 	}
 
@@ -122,7 +145,5 @@ public class Chamado {
 		Chamado other = (Chamado) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
+
 }
